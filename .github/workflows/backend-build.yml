@@ -1,1 +1,25 @@
+name: Backend-Build CI
+
+on: 
+  push: 
+    branches:
+      - 'car-rental-spring/**'
+  
+  pull_request:
+    branches:
+      - 'car-rental-spring/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code 
+        uses: actions/checkout@v4
+      
+      - name: Run tests
+        run: mvn test
+  
+      
+  
 
