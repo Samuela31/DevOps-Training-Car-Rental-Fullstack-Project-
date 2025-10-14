@@ -1,6 +1,6 @@
 # Car Rental Project
 
-A full-stack car rental management system with a Spring Boot backend and Angular frontend.
+A full-stack car rental management system with a Spring Boot backend and Angular frontend (forked by me for learning purposes).
 
 ## Project Structure
 
