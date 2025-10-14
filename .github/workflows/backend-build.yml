@@ -1,7 +1,6 @@
 name: Backend-Build CI
 
 on:
-  push:
     branches:
       - main
     paths:
