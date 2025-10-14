@@ -14,8 +14,8 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
-    defaults:
-      run:
-        working-directory: car-rental-spring
+    steps:
+      - name: Node version
+        run: node --version
