@@ -2,10 +2,19 @@ name: Backend-Build CI
 
 on:
   push:
+    branches:
+      - main
+    paths:
+      - 'car-rental-spring/**'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'car-rental-spring/**'
 
 jobs:
   first-job:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Node version
         run: node --version
