@@ -1,8 +1,7 @@
 name: Fullstack CI - Docker Build & Test
 
 on:
-  pull_request:
-    branches: [ main ]  # or master/develop
+  pull_request: {}
 
 jobs:
   build-and-test:
