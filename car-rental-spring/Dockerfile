@@ -9,13 +9,13 @@ WORKDIR /app
 # Copy only pom.xml first (to cache dependencies)
 COPY pom.xml .
 
-# Download dependencies (so next builds are faster)
+# Download dependencies (offline for faster builds)
 RUN mvn dependency:go-offline -B
 
-# Copy the full project
+# Copy full source code
 COPY src ./src
 
-# Package the application
+# Run tests and build the jar
 RUN mvn clean package -DskipTests=false
 
 # ==========================
@@ -26,11 +26,12 @@ FROM eclipse-temurin:17-jdk-alpine
 # Set working directory
 WORKDIR /app
 
-# Copy the jar from the build stage
+# Copy the built jar from build stage
 COPY --from=build /app/target/*.jar app.jar
 
-# Expose the port your Spring Boot app runs on (change if different)
+# Expose the default Spring Boot port
 EXPOSE 8080
 
-# Run the jar
+# Run the Spring Boot application
 ENTRYPOINT ["java", "-jar", "app.jar"]
+
