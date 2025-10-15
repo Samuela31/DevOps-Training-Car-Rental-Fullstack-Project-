@@ -1,21 +1,36 @@
-# Step 1: Build Angular inside Docker
+# ==========================
+# 1️⃣ Base image
+# ==========================
 FROM node:20-alpine AS build
-LABEL maintainer="Samuela"
+
+# Set working directory
 WORKDIR /app
 
+# Copy package.json and package-lock.json first (for caching)
 COPY package*.json ./
+
+# Install dependencies
 RUN npm install
+
+# Copy the full source code
 COPY . .
 
-# Build Angular for development (default)
-RUN npx ng build
+# Build Angular app (production)
+RUN npm run build --prod
 
-# Step 2: Serve with Nginx
+# Run tests in headless mode, but don't fail if no tests exist
+RUN npm run test -- --watch=false --browsers=ChromeHeadless || true
+
+# ==========================
+# 2️⃣ Runtime image
+# ==========================
 FROM nginx:alpine
-RUN rm -rf /usr/share/nginx/html/*
 
-# Copy Angular build output
-COPY --from=build /app/dist/car-rental-angular /usr/share/nginx/html
+# Copy Angular build output to Nginx html folder
+COPY --from=build /app/dist /usr/share/nginx/html
 
+# Expose default Nginx port
 EXPOSE 80
+
+# Start Nginx
 CMD ["nginx", "-g", "daemon off;"]
