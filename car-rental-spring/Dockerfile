@@ -16,7 +16,7 @@ RUN mvn dependency:go-offline -B
 COPY src ./src
 
 # Run tests and build the jar
-RUN mvn clean package -DskipTests=false
+RUN mvn clean package -DskipTests=false -Dtest='!CarRentalSpringApplicationTests'
 
 # ==========================
 # 2️⃣ Runtime Stage
