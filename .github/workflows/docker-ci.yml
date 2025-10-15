@@ -2,6 +2,7 @@ name: Fullstack CI - Docker Build & Test
 
 on:
   pull_request: {}
+  push: {}
 
 jobs:
   build-and-test:
