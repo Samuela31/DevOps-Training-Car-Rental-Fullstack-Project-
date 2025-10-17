@@ -23,3 +23,28 @@ jobs:
       # Step 4: Build frontend Docker image
       - name: Build frontend image
         run: docker build -t frontend-test ./car-rental-angular
+
+      - name: Deploy to Local Test Environment
+        if: github.ref == 'refs/heads/main'
+        run: |
+          echo "Stopping any existing backend container..."
+          docker stop backend || true
+          docker rm backend || true
+          echo "Starting new backend container..."
+          docker run -d --name backend -p 8080:8080 ${{ secrets.DOCKERHUB_USERNAME }}/backend:latest
+          echo "Running containers:"
+          docker ps
+
+
+
+
+
+
+
+
+
+
+
+
+
+
