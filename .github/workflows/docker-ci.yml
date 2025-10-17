@@ -28,10 +28,10 @@ jobs:
         if: github.ref == 'refs/heads/main'
         run: |
           echo "Stopping any existing backend container..."
-          docker stop backend || true
-          docker rm backend || true
+          docker stop backend-test || true
+          docker rm backend-test || true
           echo "Starting new backend container..."
-          docker run -d --name backend -p 8080:8080 ${{ secrets.DOCKERHUB_USERNAME }}/backend:latest
+          docker run -d --name backend -p 8080:8080 samuela39/backend:latest
           echo "Running containers:"
           docker ps
 
