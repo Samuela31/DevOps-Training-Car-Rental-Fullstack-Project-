@@ -27,18 +27,23 @@ jobs:
       - name: Deploy to Local Test Environment
         if: github.ref == 'refs/heads/main'
         run: |
-          echo "Stopping any existing backend container..."
+          echo "Starting backend container for test environment..."
           docker stop backend-test || true
           docker rm backend-test || true
-          echo "Starting new backend container..."
-          docker run -d --name backend -p 8080:8080 samuela39/backend:latest
-          echo "Running containers:"
+          docker run -d --name backend-test -p 8080:8080 backend-test
+      
+          echo "Waiting a few seconds for app to start..."
+          sleep 10
+      
+          echo "Checking running containers:"
           docker ps
-
-
-
-
-
+      
+          echo "Fetching container logs (basic health check):"
+          docker logs backend-test || true
+      
+          echo "Stopping and cleaning up..."
+          docker stop backend-test || true
+          docker rm backend-test || true
 
 
 
